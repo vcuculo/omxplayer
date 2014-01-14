@@ -174,8 +174,9 @@ void print_usage()
 void print_keybindings()
 {
   printf("Key bindings :\n");
-  printf("        1                  decrease speed\n");
-  printf("        2                  increase speed\n");
+  printf("        1                  go to chapter 1\n");
+  printf("        2                  go to chapter 2\n");
+  printf("        3                  go to chapter 3\n");
   printf("        z                  show info\n");
   printf("        j                  previous audio stream\n");
   printf("        k                  next audio stream\n");
@@ -868,10 +869,25 @@ int main(int argc, char *argv[])
         vc_tv_show_info(m_tv_show_info);
         break;
       case '1':
-        SetSpeed(m_av_clock->OMXPlaySpeed() - 1);
+        if(m_omx_reader.GetChapterCount() > 0)
+        {
+          m_omx_reader.SeekChapter(1, &startpts);
+          FlushStreams(startpts);
+        }
         break;
       case '2':
-        SetSpeed(m_av_clock->OMXPlaySpeed() + 1);
+        if(m_omx_reader.GetChapterCount() > 0)
+        {
+          m_omx_reader.SeekChapter(2, &startpts);
+          FlushStreams(startpts);
+        }
+        break;
+      case '3':
+        if(m_omx_reader.GetChapterCount() > 0)
+        {
+          m_omx_reader.SeekChapter(3, &startpts);
+          FlushStreams(startpts);
+        }
         break;
       case 'j':
         if(m_has_audio)

@@ -238,6 +238,8 @@ bool OMXReader::Open(std::string filename, bool dump_format)
     int64_t len = m_pFile->GetLength();
     int64_t tim = GetStreamLength();
 
+    printf("Length : %8lld\n",tim);
+
     if(len > 0 && tim > 0)
     {
       unsigned rate = len * 1000 / tim;
